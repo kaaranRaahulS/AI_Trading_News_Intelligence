@@ -163,9 +163,3 @@ def display_tags(title: str, tags: List[Dict]) -> None:
         print("    (no tags)")
         return
 
-    for t in tags:
-        star = "★" if t["in_title"] else " "
-        print(f"    {star} [{t['category']}] {t['label']}")
-
-    print(f"    → Score: {score_tags(tags)}")
-

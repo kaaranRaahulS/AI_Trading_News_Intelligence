@@ -44,7 +44,6 @@ def main():
     print(f"   Total articles fetched: {len(all_articles)}")
 
     #Deduplication
-
     deduplication_result = deduplicate_articles(all_articles, key="title")
     unique_articles = deduplication_result.unique_articles
     
