@@ -24,7 +24,7 @@ A 7-stage intelligent pipeline:
 🔜 RAG retrieval system
 
 𝗧𝗲𝗰𝗵 𝗦𝘁𝗮𝗰𝗸:
-Python • NLP • REST APIs • PostgreSQL • Qdrant • LLMs • RAG
+Python | NLP | REST APIs | PostgreSQL | Qdrant | LLMs | RAG
 
 𝗪𝗵𝘆 𝗧𝗵𝗶𝘀 𝗠𝗮𝘁𝘁𝗲𝗿𝘀:
-After 6+ years trading XAUUSD professionally, I understand the macro relationships that move gold — Fed policy, real yields, DXY, safe-haven flows. This system encodes that domain expertise into AI.
+After 6+ years trading XAUUSD professionally, I understand the macro relationships that move gold => Fed policy, real yields, DXY, safe-haven flows. This system encodes that domain expertise into AI.
