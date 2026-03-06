@@ -1,8 +1,7 @@
-from news_ingestion import fetch_news_gnewsio, fetch_news_marketaux
-from tagger import tag_article
-from deduplication import deduplicate_articles
-from datetime import date
-from scoring import calculate_impact_score
+# main.py
+from pipeline import run_pipeline
+from storage import search_similar, close as close_storage
+
 
 def display_article(article, index: int):
     print(f"\n{index}. {article.title}")
@@ -15,70 +14,50 @@ def display_article(article, index: int):
     if article.content:
         preview = article.content[:200].replace("\n", " ")
         print(f"   Preview   : {preview}...")
-    
+
     if article.tags:
-        tag_labels = [t["label"] for t in article.tags]
+        tag_labels = [t["label"] if isinstance(t, dict) else t for t in article.tags]
         print(f"   Tags      : {', '.join(tag_labels)}")
 
     if hasattr(article, "impact_score"):
-        print(f"   Impact Score: {article.impact_score}/10")
-        print(f"   Direction   : {article.direction}")
+        print(f"   Impact    : {article.impact_score}/10 ({article.direction})")
+
+
+def run_search_demo():
+    demo_queries = [
+        "Federal Reserve interest rate decision impact on gold",
+        "Inflation data and gold price movement",
+        "Geopolitical tensions safe haven demand",
+    ]
+    print("\n" + "=" * 60)
+    print("🔍 SIMILARITY SEARCH")
+    print("=" * 60)
+
+    for q in demo_queries:
+        results = search_similar(q, limit=3)
+        print(f"\n  Query: {q}")
+        if not results:
+            print("    (no results)")
+        for r in results:
+            print(f"    {r['score']:.4f} | [{r['impact_score']}/10 {r['direction']}] {r['title']}")
 
 
 def main():
-    
-    #Marketaux
-    marketaux_articles = fetch_news_marketaux(
-        limit=3,
-        published_on=date.today(),
-    )
-    print(f"   Found {len(marketaux_articles)} articles from Marketaux")
+    #Full pipeline
+    articles = run_pipeline()
 
-    #Gnewsio
-    articles = fetch_news_gnewsio(
-        query=("gold price OR XAUUSD OR bullion",
-        "gold inflation OR gold CPI",
-        "gold federal reserve OR gold interest rates",
-        "gold treasury yields OR gold dollar"),
-        num_articles=10,
-    )
-    print(f"   Found {len(articles)} articles from GNews.io")
-
-    #Combining 
-    all_articles = marketaux_articles + articles
-    print(f"   Total articles fetched: {len(all_articles)}")
-
-    #Deduplication
-    deduplication_result = deduplicate_articles(all_articles, key="title")
-    unique_articles = deduplication_result.unique_articles
-    
-    print(f"   {deduplication_result.summary()}")
-    
-    #Tagging
-    for article in unique_articles:
-        article.tags = tag_article(article.title, article.content or "")
-    
-    tagged_count = sum(1 for a in unique_articles if a.tags)
-    print(f"   Tagged {tagged_count}/{len(unique_articles)} articles")
-
-    #Scoring
-    for article in unique_articles:
-        score, direction = calculate_impact_score(article)
-        article.impact_score = score
-        article.direction = direction
-    
-    # Sort by impact score (highest first)
-    unique_articles.sort(key=lambda a: a.impact_score, reverse=True)
-    print(f"   Scored {len(unique_articles)} articles")
-
+    #News results
     print("\n" + "=" * 60)
-    print(f"📰 NEWS RESULTS ({len(unique_articles)} articles)")
+    print(f"📰 NEWS RESULTS ({len(articles)} articles)")
     print("=" * 60)
-    
-
-
-    for index, article in enumerate(unique_articles, start=1):
+    for index, article in enumerate(articles, start=1):
         display_article(article, index)
+
+    #Demo Query 
+    run_search_demo()
+
+    close_storage()
+
 
 if __name__ == "__main__":
     main()
