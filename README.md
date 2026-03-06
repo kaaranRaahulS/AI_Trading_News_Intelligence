@@ -18,9 +18,9 @@ A 7-stage intelligent pipeline:
 ✅ Multi-source news ingestion (GNews.io, Marketaux)
 ✅ Intelligent deduplication
 ✅ Rule-based macro tagging (40+ patterns)
-🔜 Impact scoring
+✅ Impact scoring
+✅ PostgreSQL + Qdrant storage
 🔜 LLM reasoning (Claude API)
-🔜 PostgreSQL + Qdrant storage
 🔜 RAG retrieval system
 
 𝗧𝗲𝗰𝗵 𝗦𝘁𝗮𝗰𝗸:
