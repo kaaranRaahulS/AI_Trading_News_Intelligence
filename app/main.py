@@ -2,6 +2,7 @@ from news_ingestion import fetch_news_gnewsio, fetch_news_marketaux
 from tagger import tag_article
 from deduplication import deduplicate_articles
 from datetime import date
+from scoring import calculate_impact_score
 
 def display_article(article, index: int):
     print(f"\n{index}. {article.title}")
@@ -18,6 +19,10 @@ def display_article(article, index: int):
     if article.tags:
         tag_labels = [t["label"] for t in article.tags]
         print(f"   Tags      : {', '.join(tag_labels)}")
+
+    if hasattr(article, "impact_score"):
+        print(f"   Impact Score: {article.impact_score}/10")
+        print(f"   Direction   : {article.direction}")
 
 
 def main():
@@ -56,10 +61,22 @@ def main():
     tagged_count = sum(1 for a in unique_articles if a.tags)
     print(f"   Tagged {tagged_count}/{len(unique_articles)} articles")
 
+    #Scoring
+    for article in unique_articles:
+        score, direction = calculate_impact_score(article)
+        article.impact_score = score
+        article.direction = direction
+    
+    # Sort by impact score (highest first)
+    unique_articles.sort(key=lambda a: a.impact_score, reverse=True)
+    print(f"   Scored {len(unique_articles)} articles")
+
     print("\n" + "=" * 60)
     print(f"📰 NEWS RESULTS ({len(unique_articles)} articles)")
     print("=" * 60)
     
+
+
     for index, article in enumerate(unique_articles, start=1):
         display_article(article, index)
 
