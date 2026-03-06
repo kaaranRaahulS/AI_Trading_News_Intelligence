@@ -10,8 +10,8 @@ A 7-stage intelligent pipeline:
 2️⃣ Filter → Keep only macro-relevant articles
 3️⃣ Tag → Label with inflation, fed, yields, dollar, etc.
 4️⃣ Score → Rule-based impact scoring
-5️⃣ Reason → LLM-powered macro analysis
-6️⃣ Store → PostgreSQL with full context
+5️⃣ Store → PostgreSQL with full context
+6️⃣ Reason → LLM-powered macro analysis
 7️⃣ Search → Find similar past events via RAG
 
 𝗖𝘂𝗿𝗿𝗲𝗻𝘁 𝗣𝗿𝗼𝗴𝗿𝗲𝘀𝘀:
@@ -20,7 +20,7 @@ A 7-stage intelligent pipeline:
 ✅ Rule-based macro tagging (40+ patterns)
 ✅ Impact scoring
 ✅ PostgreSQL + Qdrant storage
-🔜 LLM reasoning (Claude API)
+🔜 LLM reasoning qwen2.5:14b(Locally using Ollama)
 🔜 RAG retrieval system
 
 𝗧𝗲𝗰𝗵 𝗦𝘁𝗮𝗰𝗸:
