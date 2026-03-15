@@ -1,6 +1,6 @@
 # main.py
-from pipeline import run_pipeline
-from storage import search_similar, close as close_storage
+from news_pipeline.pipeline import run_pipeline
+from data.storage import search_similar, close as close_storage
 
 
 def display_article(article, index: int):
@@ -30,7 +30,7 @@ def run_search_demo():
         "Geopolitical tensions safe haven demand",
     ]
     print("\n" + "=" * 60)
-    print("🔍 SIMILARITY SEARCH")
+    print("SIMILARITY SEARCH")
     print("=" * 60)
 
     for q in demo_queries:
@@ -48,7 +48,7 @@ def main():
 
     #News results
     print("\n" + "=" * 60)
-    print(f"📰 NEWS RESULTS ({len(articles)} articles)")
+    print(f"NEWS RESULTS ({len(articles)} articles)")
     print("=" * 60)
     for index, article in enumerate(articles, start=1):
         display_article(article, index)

@@ -1,9 +1,9 @@
 from datetime import date
-from news_ingestion import fetch_news_gnewsio, fetch_news_marketaux
-from tagger import tag_article
-from deduplication import deduplicate_articles
-from scoring import calculate_impact_score
-from storage import init_collection, store_articles
+from news_pipeline.news_ingestion import fetch_news_gnewsio, fetch_news_marketaux
+from news_pipeline.tagger import tag_article
+from news_pipeline.deduplication import deduplicate_articles
+from news_pipeline.scoring import calculate_impact_score
+from data.storage import init_collection, store_articles
 
 
 def run_pipeline() -> list:
