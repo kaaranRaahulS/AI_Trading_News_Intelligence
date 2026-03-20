@@ -112,6 +112,7 @@ RULES = {
 
 COMPILED_RULES = []
 
+#Compiled Rules for faster processing. Compiled once. 
 for category, subgroups in RULES.items():
     for label, patterns in subgroups.items():
         for pattern in patterns:

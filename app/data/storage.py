@@ -121,6 +121,10 @@ def close():
 if __name__ == "__main__":
     from dataclasses import dataclass
 
+    #clean the database
+    # init_collection(recreate=True)clear
+    
+
     @dataclass
     class _TestArticle:
         title: str = ""

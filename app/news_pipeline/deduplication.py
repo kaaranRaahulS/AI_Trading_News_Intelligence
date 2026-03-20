@@ -20,7 +20,7 @@ class DeduplicationResult:
     
     def summary(self) -> str:
         return (
-            f"{self.total_input} articles → "
+            f"{self.total_input} articles "
             f"{len(self.unique_articles)} unique "
             f"({self.duplicates_removed} duplicates removed)"
         )
